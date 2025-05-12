@@ -6,12 +6,12 @@ export default function page() {
       <StartChoiceCard
         title="Find a Recipe"
         description="Search by cusine, ingredient, or dish name"
-        link="/search"
+        link="/home/search"
       />
       <StartChoiceCard
         title="My Recipes"
         description="Use one of your own recipes"
-        link="my-recipes"
+        link="/home/my-recipes"
       />
     </section>
   );
