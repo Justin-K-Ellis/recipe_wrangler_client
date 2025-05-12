@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SignInSignOutBtn from "./SignInSignOutBtn";
 
 export default function Header() {
   return (
@@ -10,9 +11,10 @@ export default function Header() {
         <button className="btn">
           <Link href={"/about"}>About</Link>
         </button>
-        <button className="btn">
+        <SignInSignOutBtn />
+        {/* <button className="btn">
           <Link href={"/signin"}>Sign In</Link>
-        </button>
+        </button> */}
       </div>
     </nav>
   );
