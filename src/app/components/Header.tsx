@@ -12,9 +12,6 @@ export default function Header() {
           <Link href={"/about"}>About</Link>
         </button>
         <SignInSignOutBtn />
-        {/* <button className="btn">
-          <Link href={"/signin"}>Sign In</Link>
-        </button> */}
       </div>
     </nav>
   );
