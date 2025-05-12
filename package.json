@@ -1,5 +1,5 @@
 {
-  "name": "recipe_wrangler",
+  "name": "recipe_wrangler_client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
