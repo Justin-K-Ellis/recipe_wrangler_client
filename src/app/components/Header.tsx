@@ -3,7 +3,7 @@ import SignInSignOutBtn from "./SignInSignOutBtn";
 
 export default function Header() {
   return (
-    <nav className="navbar bg-base-100 shadow-sm">
+    <nav className="navbar bg-base-100 shadow-sm mb-4">
       <Link href={"/"} className=" text-2xl font-bold navbar-start">
         Recipe Wrangler
       </Link>
