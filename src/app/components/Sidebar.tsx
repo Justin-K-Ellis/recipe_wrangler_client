@@ -6,17 +6,17 @@ export default function Sidebar() {
     {
       name: "Favorites",
       icon: "❤️",
-      link: "/favorites",
+      link: "/home/favorites",
     },
     {
-      name: "Interested",
+      name: "Want to Make",
       icon: "🤔",
-      link: "/interested",
+      link: "/home/want-to-make",
     },
     {
       name: "My Recipes",
       icon: "✍️",
-      link: "/my-recipes",
+      link: "/home/my-recipes",
     },
   ];
 
