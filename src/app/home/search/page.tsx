@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 type searchValueType = string | readonly string[] | number | undefined;
 
@@ -9,19 +9,20 @@ export default function Search() {
   const [searchValue, setSearchValue] = useState<searchValueType>("");
   const searchOptions = ["Cuisine", "Dish name", "Ingredients"];
 
-  function handleSubmit(event) {
+  function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
     console.log(`Search for ${searchValue} amoung the ${searchType}.`);
   }
 
   return (
-    <section>
+    <section className="flex flex-row justify-center">
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-row">
+        <div className="flex flex-row gap-2">
           {/* Search options dropdown */}
           <select
             className="select"
             defaultValue={"Search from..."}
+            required
             onChange={(e) => setSearchType(e.target.value)}
           >
             <option disabled={true}>Search from...</option>
@@ -53,6 +54,7 @@ export default function Search() {
               className="grow"
               placeholder="Search"
               value={searchValue}
+              required
               onChange={(e) => setSearchValue(e.target.value)}
             />
           </label>
