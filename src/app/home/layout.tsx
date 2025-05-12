@@ -6,7 +6,7 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row h-full">
       <Sidebar />
       <main>{children}</main>
     </div>
