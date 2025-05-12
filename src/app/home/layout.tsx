@@ -8,7 +8,7 @@ export default function HomeLayout({
   return (
     <div className="flex flex-row h-full">
       <Sidebar />
-      <main>{children}</main>
+      <main className="w-8/10">{children}</main>
     </div>
   );
 }
