@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { onAuthStateChanged } from "firebase/auth";
 import SignInSignOutBtn from "./SignInSignOutBtn";
@@ -8,12 +8,16 @@ import RegisterBtn from "./RegisterBtn";
 import auth from "../auth/firebase.js";
 
 export default function Header() {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log(user);
+        setIsSignedIn(true);
       } else {
         console.log("user note signed in");
+        setIsSignedIn(false);
       }
     });
   }, []);
@@ -27,8 +31,8 @@ export default function Header() {
         <button className="btn">
           <Link href={"/about"}>About</Link>
         </button>
-        <SignInSignOutBtn />
-        <RegisterBtn />
+        <SignInSignOutBtn isSignedIn={isSignedIn} />
+        {!isSignedIn && <RegisterBtn />}
       </div>
     </nav>
   );
