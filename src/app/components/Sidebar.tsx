@@ -31,6 +31,11 @@ export default function Sidebar() {
             <Link href={item.link}>{item.name + " " + item.icon}</Link>
           </li>
         ))}
+        <li>
+          <button className="btn btn-primary w-full text-xl">
+            <Link href={"/home/create"}>Create a Recipe</Link>
+          </button>
+        </li>
       </ul>
     </div>
   );
