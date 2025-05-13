@@ -8,7 +8,7 @@ export default function Page() {
   const [name, setName] = useState<string>("");
   const [cuisine, setCuisine] = useState<string>("");
   const [ingredients, setIngredients] = useState<string[]>(["", "", ""]);
-  const [steps, setSteps] = useState<string[]>([]);
+  const [steps, setSteps] = useState<string[]>(["", "", ""]);
 
   const cuisineTypes = ["Japanese", "Chinese", "Indian", "Mexican"]; // dummy data
 
@@ -16,6 +16,7 @@ export default function Page() {
     event.preventDefault();
     console.log("cuisine:", cuisine);
     console.log("ingredients:", ingredients);
+    console.log("steps:", steps);
   }
 
   // == Ingredient operations ==
@@ -37,11 +38,37 @@ export default function Page() {
   }
 
   // Delete
-  function handleIngredientDelete(index) {
+  function handleIngredientDelete(index: number) {
     const newIngredients = ingredients.filter((ing, i) => {
       if (index !== i) return ing;
     });
     setIngredients(newIngredients);
+  }
+
+  // == Step Operations ==
+  // Create
+  function handleAddToSteps() {
+    setSteps([...steps, ""]);
+  }
+
+  // Update
+  function handleStepChange(value: string, index: number) {
+    const newSteps = steps.map((_step, i) => {
+      if (index === i) {
+        return value;
+      } else {
+        return steps[i];
+      }
+    });
+    setSteps(newSteps);
+  }
+
+  // Delete
+  function handleStepsDelete(index: number) {
+    const newSteps = steps.filter((step, i) => {
+      if (index !== i) return step;
+    });
+    setSteps(newSteps);
   }
 
   return (
@@ -82,6 +109,14 @@ export default function Page() {
           dataAddHandler={handleAddToIngredients}
           dataChangeHandler={handleIngredientChange}
           dataDeleteHandler={handleIngredientDelete}
+        />
+        {/* Steps */}
+        <ListInput
+          title="Step"
+          data={steps}
+          dataAddHandler={handleAddToSteps}
+          dataChangeHandler={handleStepChange}
+          dataDeleteHandler={handleStepsDelete}
         />
         <div>
           <button type="submit" className="btn btn-success w-5/10">
