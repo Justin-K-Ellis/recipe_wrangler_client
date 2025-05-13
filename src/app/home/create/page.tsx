@@ -2,6 +2,7 @@
 
 import { SyntheticEvent, useState } from "react";
 import PageTitle from "@/app/components/PageTitle";
+import ListInput from "@/app/components/ListInput";
 
 export default function Page() {
   const [name, setName] = useState<string>("");
@@ -75,38 +76,13 @@ export default function Page() {
           </select>
         </div>
         {/* Ingredients */}
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4">
-          <legend className="fieldset-legend text-xl font-bold">
-            Ingredients
-          </legend>
-          {ingredients.map((ing, i) => (
-            <div key={i} className="flex flex-row gap-2 items-center">
-              <label className="text-lg">{"Ingredient " + (i + 1)}</label>
-              <input
-                type="text"
-                className="input"
-                value={ingredients[i]}
-                onChange={(e) => handleIngredientChange(e.target.value, i)}
-                required
-              />
-              <button
-                type="button"
-                className="btn btn-soft btn-warning"
-                onClick={() => handleIngredientDelete(i)}
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            className="btn btn-neutral"
-            onClick={handleAddToIngredients}
-          >
-            + Ingredient
-          </button>
-        </fieldset>
-        {/* Submit Button */}
+        <ListInput
+          title="Ingredient"
+          data={ingredients}
+          dataAddHandler={handleAddToIngredients}
+          dataChangeHandler={handleIngredientChange}
+          dataDeleteHandler={handleIngredientDelete}
+        />
         <div>
           <button type="submit" className="btn btn-success w-5/10">
             Submit
