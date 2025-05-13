@@ -1,7 +1,23 @@
+"use client";
+
+import { useEffect } from "react";
 import Link from "next/link";
+import { onAuthStateChanged } from "firebase/auth";
 import SignInSignOutBtn from "./SignInSignOutBtn";
+import RegisterBtn from "./RegisterBtn";
+import auth from "../auth/firebase.js";
 
 export default function Header() {
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user);
+      } else {
+        console.log("user note signed in");
+      }
+    });
+  }, []);
+
   return (
     <nav className="navbar bg-base-100 shadow-sm mb-4">
       <Link href={"/"} className=" text-2xl font-bold navbar-start">
@@ -12,6 +28,7 @@ export default function Header() {
           <Link href={"/about"}>About</Link>
         </button>
         <SignInSignOutBtn />
+        <RegisterBtn />
       </div>
     </nav>
   );

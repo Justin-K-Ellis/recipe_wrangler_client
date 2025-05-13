@@ -4,7 +4,7 @@ import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/router";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import PageTitle from "@/app/components/PageTitle";
-import app from "../auth/firebase.js";
+import auth from "../auth/firebase.js";
 
 export default function Page() {
   const [email, setEmail] = useState<string>("");
@@ -13,7 +13,7 @@ export default function Page() {
   const [isPasswordMatchError, setisPasswordMatchError] =
     useState<boolean>(false);
   const [isSignupError, setIsSignupError] = useState<boolean>(false);
-  const router = useRouter();
+  // const router = useRouter();
 
   function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
@@ -22,7 +22,6 @@ export default function Page() {
       return;
     }
     setisPasswordMatchError(false);
-    const auth = getAuth(app);
     createUserWithEmailAndPassword(auth, email, password1)
       .then((userCredential) => {
         const user = userCredential.user;
