@@ -32,7 +32,5 @@ export default function SignInSignOutBtn({ isSignedIn }: SignProps) {
     </button>
   );
 
-  const btn = isSignedIn ? signOutBtn : signInBtn;
-
-  return btn;
+  return isSignedIn ? signOutBtn : signInBtn;
 }
