@@ -17,10 +17,13 @@ export default function Page() {
     console.log("ingredients:", ingredients);
   }
 
+  // == Ingredient operations ==
+  // Create
   function handleAddToIngredients() {
     setIngredients([...ingredients, ""]);
   }
 
+  // Update
   function handleIngredientChange(value: string, index: number) {
     const newIngredients = ingredients.map((ing, i) => {
       if (index === i) {
@@ -28,6 +31,14 @@ export default function Page() {
       } else {
         return ingredients[i];
       }
+    });
+    setIngredients(newIngredients);
+  }
+
+  // Delete
+  function handleIngredientDelete(index) {
+    const newIngredients = ingredients.filter((ing, i) => {
+      if (index !== i) return ing;
     });
     setIngredients(newIngredients);
   }
@@ -76,7 +87,15 @@ export default function Page() {
                 className="input"
                 value={ingredients[i]}
                 onChange={(e) => handleIngredientChange(e.target.value, i)}
+                required
               />
+              <button
+                type="button"
+                className="btn btn-soft btn-warning"
+                onClick={() => handleIngredientDelete(i)}
+              >
+                Delete
+              </button>
             </div>
           ))}
           <button
