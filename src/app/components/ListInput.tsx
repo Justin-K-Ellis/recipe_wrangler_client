@@ -18,7 +18,7 @@ export default function ListInput({
       <legend className="fieldset-legend text-xl font-bold">
         {title + "s"}
       </legend>
-      {data.map((_ing, i) => (
+      {data.map((_item, i) => (
         <div key={i} className="flex flex-row gap-2 items-center">
           <label className="text-lg">{"Ingredient " + (i + 1)}</label>
           <input
