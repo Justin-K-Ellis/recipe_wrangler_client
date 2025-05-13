@@ -42,7 +42,7 @@ export default function ListInput({
         className="btn btn-neutral"
         onClick={dataAddHandler}
       >
-        + Ingredient
+        + {title}
       </button>
     </fieldset>
   );
