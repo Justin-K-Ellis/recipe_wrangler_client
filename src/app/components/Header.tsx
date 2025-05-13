@@ -16,7 +16,7 @@ export default function Header() {
         console.log(user);
         setIsSignedIn(true);
       } else {
-        console.log("user note signed in");
+        console.log("user not signed in");
         setIsSignedIn(false);
       }
     });

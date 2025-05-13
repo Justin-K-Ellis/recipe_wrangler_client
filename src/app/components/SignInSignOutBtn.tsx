@@ -1,15 +1,38 @@
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
+import auth from "../auth/firebase";
 
-export default function SignInSignOutBtn({
-  isSignedIn,
-}: {
+interface SignProps {
   isSignedIn: boolean;
-}) {
-  return (
+}
+
+export default function SignInSignOutBtn({ isSignedIn }: SignProps) {
+  const router = useRouter();
+
+  function handleSignOut() {
+    signOut(auth)
+      .then(() => {
+        router.push("/welcome");
+      })
+      .catch((error) => {
+        console.error(error.code, error.message);
+      });
+  }
+
+  const signInBtn = (
     <button className="btn">
-      <Link href={isSignedIn ? "/signout" : "/signin"}>
-        {isSignedIn ? "Sign Out" : "Sign In"}
-      </Link>
+      <Link href="/signin">Sign In</Link>
     </button>
   );
+
+  const signOutBtn = (
+    <button className="btn" onClick={handleSignOut}>
+      Sign Out
+    </button>
+  );
+
+  const btn = isSignedIn ? signOutBtn : signInBtn;
+
+  return btn;
 }
