@@ -1,6 +1,6 @@
 "use client";
 
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import PageTitle from "@/app/components/PageTitle";
@@ -12,19 +12,21 @@ export default function Page() {
   const [isSignInError, setIsSignInError] = useState<boolean>(false);
   const router = useRouter();
 
-  function handleSubmit(event: SyntheticEvent) {
+  async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
-
-    signInWithEmailAndPassword(auth, email, password1)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-        router.push("/home/");
-      })
-      .catch((error) => {
-        console.error(error.code, error.message);
-        setIsSignInError(true);
-      });
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password1
+      );
+      const user = userCredential.user;
+      console.log(user);
+      router.push("/home/");
+    } catch (error) {
+      console.error(error);
+      setIsSignInError(true);
+    }
   }
 
   return (
