@@ -10,7 +10,7 @@ export default function RecipePreviewCard({
   notes,
 }: RecipePreviewProps) {
   return (
-    <div className="card w-5/10">
+    <div className="card w-9/10 card-border shadow hover:shadow-lg">
       <div className="card-body">
         <h3 className="card-title">{name}</h3>
         <div className="badge badge-soft badge-primary">{cuisine}</div>
