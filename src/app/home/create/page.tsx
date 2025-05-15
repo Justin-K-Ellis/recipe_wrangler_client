@@ -3,20 +3,37 @@
 import { SyntheticEvent, useState } from "react";
 import PageTitle from "@/app/components/PageTitle";
 import ListInput from "@/app/components/ListInput";
+import auth from "../../auth/firebase.js";
 
 export default function Page() {
   const [name, setName] = useState<string>("");
   const [cuisine, setCuisine] = useState<string>("");
-  const [ingredients, setIngredients] = useState<string[]>(["", "", ""]);
-  const [steps, setSteps] = useState<string[]>(["", "", ""]);
+  const [ingredients, setIngredients] = useState<string[]>([""]);
+  const [steps, setSteps] = useState<string[]>([""]);
+  const [notes, setNotes] = useState<string>("");
 
-  const cuisineTypes = ["Japanese", "Chinese", "Indian", "Mexican"]; // dummy data
+  const api = process.env.NEXT_PUBLIC_EXP_API;
 
-  function handleSubmit(event: SyntheticEvent) {
+  const cuisineTypes = ["Japanese", "Chinese", "Indian", "Mexican", "Italian"]; // dummy data
+
+  async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
-    console.log("cuisine:", cuisine);
-    console.log("ingredients:", ingredients);
-    console.log("steps:", steps);
+    const token = auth.currentUser.accessToken;
+    try {
+      const response = await fetch(`${api}/custom-recipe`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ name, cuisine, ingredients, steps, notes }),
+      });
+      if (!response.ok) {
+        console.error(response);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   // == Ingredient operations ==
@@ -118,7 +135,15 @@ export default function Page() {
           dataChangeHandler={handleStepChange}
           dataDeleteHandler={handleStepsDelete}
         />
-        <div>
+        {/* Notes */}
+        <h2 className="text-xl font-bold">Notes</h2>
+        <textarea
+          className="textarea w-full"
+          placeholder="About this recipe..."
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+        ></textarea>
+        <div className="flex flex-row justify-center">
           <button type="submit" className="btn btn-success w-5/10">
             Submit
           </button>
