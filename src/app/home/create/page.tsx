@@ -1,6 +1,7 @@
 "use client";
 
 import { SyntheticEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import PageTitle from "@/app/components/PageTitle";
 import ListInput from "@/app/components/ListInput";
 
@@ -12,9 +13,8 @@ export default function Page() {
   const [readyInMinutes, setReadyInMinutes] = useState<string>("10");
   const [servings, setServings] = useState<string>("1");
 
+  const router = useRouter();
   const api = process.env.NEXT_PUBLIC_EXP_API;
-
-  const cuisineTypes = ["Japanese", "Chinese", "Indian", "Mexican", "Italian"]; // dummy data
 
   async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
@@ -22,7 +22,6 @@ export default function Page() {
     try {
       const readyNum = parseInt(readyInMinutes);
       const servingNum = parseInt(servings);
-      console.log("ready time and servings:", readyNum, servingNum);
 
       const response = await fetch(`${api}/custom-recipe`, {
         method: "POST",
@@ -41,6 +40,8 @@ export default function Page() {
       });
       if (!response.ok) {
         console.error(response);
+      } else {
+        router.push(`/home/my-recipes`);
       }
     } catch (error) {
       console.error(error);
@@ -55,7 +56,7 @@ export default function Page() {
 
   // Update
   function handleIngredientChange(value: string, index: number) {
-    const newIngredients = ingredients.map((ing, i) => {
+    const newIngredients = ingredients.map((_ing, i) => {
       if (index === i) {
         return value;
       } else {
@@ -118,17 +119,13 @@ export default function Page() {
         {/* Cuisine */}
         <div className="flex flex-row gap-4 items-center">
           <label className="text-xl font-bold">Cuisine</label>
-          <select
-            className="select"
+          <input
+            type="text"
+            className="input"
+            placeholder="Japanese"
+            value={cuisine}
             onChange={(e) => setCuisine(e.target.value)}
-          >
-            <option value="">What kind of food?</option>
-            {cuisineTypes.map((cuisine) => (
-              <option key={cuisine} value={cuisine}>
-                {cuisine}
-              </option>
-            ))}
-          </select>
+          />
         </div>
         {/* Ready in Minutes */}
         <div className="flex flex-row gap-4 items-center">
