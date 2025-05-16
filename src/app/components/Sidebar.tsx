@@ -33,6 +33,11 @@ export default function Sidebar() {
         ))}
         <li>
           <button className="btn btn-primary w-full text-xl">
+            <Link href={"/home/search"}>Find a Recipe</Link>
+          </button>
+        </li>
+        <li>
+          <button className="btn btn-primary w-full text-xl">
             <Link href={"/home/create"}>Create a Recipe</Link>
           </button>
         </li>
