@@ -3,7 +3,6 @@
 import { SyntheticEvent, useState } from "react";
 import PageTitle from "@/app/components/PageTitle";
 import ListInput from "@/app/components/ListInput";
-import auth from "../../auth/firebase.js";
 
 export default function Page() {
   const [name, setName] = useState<string>("");

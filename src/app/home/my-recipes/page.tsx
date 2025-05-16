@@ -34,7 +34,7 @@ export default function Page() {
       }
     }
     getAllRecipes();
-  }, []);
+  }, [api]);
 
   if (isLoadingError)
     return (

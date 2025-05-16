@@ -1,15 +1,12 @@
 "use client";
 
-import { SyntheticEvent, useState, useEffect } from "react";
-
-type searchValueType = string | readonly string[] | number | undefined;
+import { SyntheticEvent, useState } from "react";
+import Link from "next/link";
+import { SearchResults } from "@/app/types";
 
 export default function Search() {
-  // const [searchType, setSearchType] = useState<string | null>(null);
-  // const [searchValue, setSearchValue] = useState<searchValueType>("");
   const [searchValue, setSearchValue] = useState("");
-  // const searchOptions = ["Cuisine", "Dish name", "Ingredients"];
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<SearchResults[]>([]);
 
   const api = process.env.NEXT_PUBLIC_EXP_API;
 
@@ -42,19 +39,6 @@ export default function Search() {
       <section className="flex flex-row justify-center">
         <form onSubmit={handleSubmit}>
           <div className="flex flex-row gap-2">
-            {/* Search options dropdown */}
-            {/* <select
-            className="select"
-            defaultValue={"Search from..."}
-            required
-            onChange={(e) => setSearchType(e.target.value)}
-          >
-            <option disabled={true}>Search from...</option>
-            {searchOptions.map((option) => (
-              <option key={option}>{option}</option>
-            ))}
-          </select> */}
-
             {/* Search bar */}
             <label className="input">
               <svg
@@ -92,9 +76,11 @@ export default function Search() {
         {searchResults &&
           searchResults?.map((result) => (
             <div key={result.id} className="card card-border w-5/10 mx-auto">
-              <div className="card-body">
-                <p className="text-xl font-bold">{result.name}</p>
-              </div>
+              <Link href={`/home/recipe/${result.id}/make-this/`}>
+                <div className="card-body">
+                  <p className="text-xl font-bold">{result.name}</p>
+                </div>
+              </Link>
             </div>
           ))}
       </div>

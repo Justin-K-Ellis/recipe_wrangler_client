@@ -16,7 +16,7 @@ export default function HomePage() {
         router.push("/welcome");
       }
     });
-  }, []);
+  }, [router]);
 
   return <div>Hello, Recipe Wrangler!</div>;
 }

@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { RecipeFullInfo } from "@/app/types";
-import MakeThisCard from "@/app/components/MakeThisCard";
 
 export default function Page({ params }: { params: { id: string } }) {
   const [recipeData, setRecipeData] = useState<RecipeFullInfo>({
@@ -17,8 +16,9 @@ export default function Page({ params }: { params: { id: string } }) {
   let url = "";
   if (id.length > 6) {
     url = `${baseApi}/custom-recipe/${id}`;
+    console.log(id);
   } else {
-    url = `${baseApi}/external-recipe/${id}`;
+    url = `${baseApi}/external-recipe/id/${id}`;
   }
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function Page({ params }: { params: { id: string } }) {
   }, [id]);
 
   if (recipeData) {
-    console.log(recipeData);
+    console.log("recipe data:", recipeData);
   }
 
   return (

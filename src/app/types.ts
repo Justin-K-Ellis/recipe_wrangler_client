@@ -13,10 +13,15 @@ interface RecipePreview {
   cuisine: string;
 }
 
+interface SearchResults {
+  id: number;
+  name: string;
+}
+
 interface SideBarItem {
   name: string;
   icon: string;
   link: string;
 }
 
-export type { RecipeFullInfo, RecipePreview, SideBarItem };
+export type { RecipeFullInfo, RecipePreview, SearchResults, SideBarItem };
