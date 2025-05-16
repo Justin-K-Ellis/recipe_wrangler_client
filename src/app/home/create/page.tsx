@@ -10,7 +10,8 @@ export default function Page() {
   const [cuisine, setCuisine] = useState<string>("");
   const [ingredients, setIngredients] = useState<string[]>([""]);
   const [steps, setSteps] = useState<string[]>([""]);
-  const [notes, setNotes] = useState<string>("");
+  const [readyInMinutes, setReadyInMinutes] = useState<string>("10");
+  const [servings, setServings] = useState<string>("1");
 
   const api = process.env.NEXT_PUBLIC_EXP_API;
 
@@ -18,15 +19,26 @@ export default function Page() {
 
   async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
-    const token = auth.currentUser.accessToken;
+    const token = localStorage.getItem("token");
     try {
+      const readyNum = parseInt(readyInMinutes);
+      const servingNum = parseInt(servings);
+      console.log("ready time and servings:", readyNum, servingNum);
+
       const response = await fetch(`${api}/custom-recipe`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ name, cuisine, ingredients, steps, notes }),
+        body: JSON.stringify({
+          name,
+          cuisine,
+          ingredients,
+          steps,
+          readyInMinutes: readyNum,
+          servings: servingNum,
+        }),
       });
       if (!response.ok) {
         console.error(response);
@@ -119,6 +131,32 @@ export default function Page() {
             ))}
           </select>
         </div>
+        {/* Ready in Minutes */}
+        <div className="flex flex-row gap-4 items-center">
+          <label className="text-xl font-bold">
+            Ready in how many minutes?
+          </label>
+          <input
+            type="number"
+            className="input"
+            placeholder="10"
+            value={readyInMinutes}
+            onChange={(e) => setReadyInMinutes(e.target.value)}
+            required
+          />
+        </div>
+        {/* Servings */}
+        <div className="flex flex-row gap-4 items-center">
+          <label className="text-xl font-bold">Servings</label>
+          <input
+            type="number"
+            className="input"
+            placeholder="1"
+            value={servings}
+            onChange={(e) => setServings(e.target.value)}
+            required
+          />
+        </div>
         {/* Ingredients */}
         <ListInput
           title="Ingredient"
@@ -135,14 +173,7 @@ export default function Page() {
           dataChangeHandler={handleStepChange}
           dataDeleteHandler={handleStepsDelete}
         />
-        {/* Notes */}
-        <h2 className="text-xl font-bold">Notes</h2>
-        <textarea
-          className="textarea w-full"
-          placeholder="About this recipe..."
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-        ></textarea>
+
         <div className="flex flex-row justify-center">
           <button type="submit" className="btn btn-success w-5/10">
             Submit

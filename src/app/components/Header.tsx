@@ -13,7 +13,9 @@ export default function Header() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
+        user.getIdToken().then((idToken) => {
+          localStorage.setItem("token", idToken);
+        });
         setIsSignedIn(true);
       } else {
         console.log("user not signed in");

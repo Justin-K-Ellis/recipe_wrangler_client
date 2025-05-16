@@ -20,8 +20,8 @@ export default function Page() {
         email,
         password1
       );
-      const user = userCredential.user;
-      console.log(user);
+      // const user = userCredential.user;
+      // console.log(auth.currentUser.accessToken);
       router.push("/home/");
     } catch (error) {
       console.error(error);

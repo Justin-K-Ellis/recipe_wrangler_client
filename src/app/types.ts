@@ -1,5 +1,5 @@
 interface RecipeFullInfo {
-  id: number;
+  externalId: number;
   name: string;
   ingredients: string[];
   steps: string[];
@@ -8,10 +8,9 @@ interface RecipeFullInfo {
 }
 
 interface RecipePreview {
-  uuid: string;
+  externalId: string;
   name: string;
   cuisine: string;
-  notes: string;
 }
 
 interface SideBarItem {

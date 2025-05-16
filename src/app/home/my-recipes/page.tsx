@@ -1,17 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import auth from "@/app/auth/firebase";
+import Link from "next/link";
 import PageTitle from "@/app/components/PageTitle";
 import RecipePreviewCard from "@/app/components/RecipePreviewCard";
+import { RecipePreview } from "@/app/types";
 
 export default function Page() {
-  const [customRecipes, setCustomRecipes] = useState([]);
+  const [customRecipes, setCustomRecipes] = useState<RecipePreview[]>([]);
   const [isLoadingError, setIsLoadingError] = useState<boolean>(false);
   const api = process.env.NEXT_PUBLIC_EXP_API;
 
   useEffect(() => {
-    const token = auth.currentUser.accessToken;
+    const token = localStorage.getItem("token");
     async function getAllRecipes() {
       try {
         const response = await fetch(`${api}/custom-recipe`, {
@@ -46,12 +47,12 @@ export default function Page() {
     <section className="flex flex-col mx-auto w-6/10 gap-3">
       <PageTitle text="My Recipes" />
       {customRecipes.map((recipe) => (
-        <RecipePreviewCard
-          key={recipe.uuid}
-          name={recipe.name}
-          cuisine={recipe.cuisine}
-          notes={recipe.notes}
-        />
+        <Link
+          href={`/home/recipe/${recipe.externalId}/make-this/`}
+          key={recipe.externalId}
+        >
+          <RecipePreviewCard name={recipe.name} cuisine={recipe.cuisine} />
+        </Link>
       ))}
     </section>
   );
