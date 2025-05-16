@@ -28,8 +28,6 @@ export default function Page() {
       await createUserWithEmailAndPassword(auth, email, password1);
       onAuthStateChanged(auth, (user) => {
         user?.getIdToken().then((idToken) => {
-          console.log(idToken);
-
           fetch(`${api}/user`, {
             method: "POST",
             headers: {
