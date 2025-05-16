@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
+import { use } from "react";
 import { RecipeFullInfo } from "@/app/types";
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [recipeData, setRecipeData] = useState<RecipeFullInfo>({
     externalId: 0,
     name: "",
@@ -11,12 +12,13 @@ export default function Page({ params }: { params: { id: string } }) {
     readyInMinutes: 0,
     servings: 0,
   });
-  const { id } = params;
+
+  const { id } = use(params);
+
   const baseApi = process.env.NEXT_PUBLIC_EXP_API;
   let url = "";
   if (id.length > 6) {
     url = `${baseApi}/custom-recipe/${id}`;
-    console.log(id);
   } else {
     url = `${baseApi}/external-recipe/id/${id}`;
   }
@@ -45,11 +47,7 @@ export default function Page({ params }: { params: { id: string } }) {
       }
     }
     getRecipeData();
-  }, [id]);
-
-  if (recipeData) {
-    console.log("recipe data:", recipeData);
-  }
+  }, [id, url]);
 
   return (
     <div>

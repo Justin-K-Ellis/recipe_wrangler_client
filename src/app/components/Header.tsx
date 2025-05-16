@@ -18,7 +18,6 @@ export default function Header() {
         });
         setIsSignedIn(true);
       } else {
-        console.log("user not signed in");
         setIsSignedIn(false);
       }
     });

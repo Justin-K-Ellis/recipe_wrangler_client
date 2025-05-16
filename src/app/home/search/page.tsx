@@ -26,9 +26,6 @@ export default function Search() {
       }
       const data = await response.json();
       setSearchResults(data);
-      console.log(searchResults);
-
-      console.log(data);
     } catch (error) {
       console.error(error);
     }

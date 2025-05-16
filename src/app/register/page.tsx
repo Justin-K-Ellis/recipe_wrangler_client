@@ -3,6 +3,7 @@
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import PageTitle from "@/app/components/PageTitle";
 import auth from "../auth/firebase.js";
 
@@ -24,43 +25,29 @@ export default function Page() {
     }
     setisPasswordMatchError(false);
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password1
-      );
-      const user = userCredential.user;
-      const token = user.accessToken;
-      const response = await fetch(`${api}/user`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          email: email,
-          diplayName: user.displayName,
-        }),
+      await createUserWithEmailAndPassword(auth, email, password1);
+      onAuthStateChanged(auth, (user) => {
+        user?.getIdToken().then((idToken) => {
+          console.log(idToken);
+
+          fetch(`${api}/user`, {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${idToken}`,
+            },
+            body: JSON.stringify({
+              email: email,
+              diplayName: user.displayName,
+            }),
+          });
+          router.push("/");
+        });
       });
-      if (!response.ok) {
-        console.error(response);
-        setIsSignupError(true);
-      }
     } catch (error) {
       console.error(error);
       setIsSignupError(true);
     }
-
-    // createUserWithEmailAndPassword(auth, email, password1)
-    //   .then((userCredential) => {
-    //     const user = userCredential.user;
-    //     console.log(user);
-    //     router.push("/home/");
-    //   })
-    //   .catch((error) => {
-    //     console.error(error.code, error.message);
-    //     setIsSignupError(true);
-    //   });
   }
 
   return (
