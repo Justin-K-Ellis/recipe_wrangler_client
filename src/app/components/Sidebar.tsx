@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SidebarBtn from "./SidebarBtn";
 import listItems from "../data/sideBarData";
 
 export default function Sidebar() {
@@ -14,14 +15,10 @@ export default function Sidebar() {
           </li>
         ))}
         <li>
-          <button className="btn btn-primary w-full text-xl">
-            <Link href={"/home/search"}>Find a Recipe</Link>
-          </button>
+          <SidebarBtn link="/home/search" text="Find a Recipe" />
         </li>
         <li>
-          <button className="btn btn-primary w-full text-xl">
-            <Link href={"/home/create"}>Create a Recipe</Link>
-          </button>
+          <SidebarBtn link="/home/create" text="Create a Recipe" />
         </li>
       </ul>
     </div>
