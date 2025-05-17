@@ -12,9 +12,17 @@ export default function Page() {
             through ingredients and recipes sets with ease.
           </p>
           <p className="py-6"></p>
-          <button className="btn btn-primary">
-            <Link href={"/signin"}>Get Started</Link>
-          </button>
+          <div
+            id="button-container"
+            className="flex flex-row gap-1 justify-center"
+          >
+            <button className="btn btn-primary w-4/10">
+              <Link href={"/signin"}>Sign In</Link>
+            </button>
+            <button className="btn btn-primary w-4/10">
+              <Link href={"/register"}>Register</Link>
+            </button>
+          </div>
         </div>
       </div>
     </div>
