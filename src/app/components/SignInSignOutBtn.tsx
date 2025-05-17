@@ -21,13 +21,13 @@ export default function SignInSignOutBtn({ isSignedIn }: SignProps) {
   }
 
   const signInBtn = (
-    <button className="btn">
+    <button className="btn btn-soft btn-primary">
       <Link href="/signin">Sign In</Link>
     </button>
   );
 
   const signOutBtn = (
-    <button className="btn" onClick={handleSignOut}>
+    <button className="btn btn-soft btn-primary" onClick={handleSignOut}>
       Sign Out
     </button>
   );
