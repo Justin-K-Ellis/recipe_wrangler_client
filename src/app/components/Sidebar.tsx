@@ -1,25 +1,7 @@
 import Link from "next/link";
-import { SideBarItem } from "../types";
+import listItems from "../data/sideBarData";
 
 export default function Sidebar() {
-  const listItems: SideBarItem[] = [
-    {
-      name: "Favorites",
-      icon: "❤️",
-      link: "/home/favorites",
-    },
-    {
-      name: "Want to Make",
-      icon: "🤔",
-      link: "/home/want-to-make",
-    },
-    {
-      name: "My Recipes",
-      icon: "✍️",
-      link: "/home/my-recipes",
-    },
-  ];
-
   return (
     <div className="w-2/10 h-full mx-2 shadow p-2 md:block hidden">
       <ul className="flex flex-col gap-4">
