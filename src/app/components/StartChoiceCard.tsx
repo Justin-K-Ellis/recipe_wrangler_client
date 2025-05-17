@@ -12,7 +12,7 @@ export default function StartChoiceCard({
   link,
 }: StartChoiceCardProps) {
   return (
-    <div className="card w-96 max-h-96 bg-base-100 card-xl shadow border border-base-300">
+    <div className="card md:w-96 w-9/10 max-h-96 bg-base-100 card-xl shadow border border-base-300">
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
         <p>{description}</p>

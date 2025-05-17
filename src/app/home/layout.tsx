@@ -9,7 +9,7 @@ export default function HomeLayout({
   return (
     <div className="flex flex-row h-full">
       <Sidebar />
-      <main className="w-8/10">{children}</main>
+      <main className="md:w-8/10 w-full">{children}</main>
       <Dock />
     </div>
   );
