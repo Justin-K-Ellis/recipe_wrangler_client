@@ -21,7 +21,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="w-2/10 h-full mx-2 shadow p-2">
+    <div className="w-2/10 h-full mx-2 shadow p-2 md:block hidden">
       <ul className="flex flex-col gap-4">
         {listItems.map((item) => (
           <li
