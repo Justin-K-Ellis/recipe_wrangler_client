@@ -24,8 +24,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const [authState, setAuthState] = useState(null);
-
   return (
     <html lang="en" data-theme="cmyk" className="h-full">
       <body

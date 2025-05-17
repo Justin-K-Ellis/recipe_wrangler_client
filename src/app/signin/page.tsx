@@ -24,25 +24,25 @@ export default function Page() {
   }
 
   return (
-    <div className="mx-auto w-8/10">
+    <div className="mx-auto w-9/10 md:w-4/10 flex flex-col items-center">
       <PageTitle text="Sign In" />
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
         {/* Email */}
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 items-center">
           <label htmlFor="">Email</label>
           <input
             type="email"
-            className="input"
+            className="input w-full"
             required
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         {/* Password */}
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 items-center">
           <label htmlFor="">Password</label>
           <input
             type="password"
-            className="input"
+            className="input w-full"
             required
             onChange={(e) => setPassword1(e.target.value)}
           />
