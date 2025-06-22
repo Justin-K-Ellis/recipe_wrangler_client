@@ -6,6 +6,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import SignInSignOutBtn from "./SignInSignOutBtn";
 import RegisterBtn from "./RegisterBtn";
 import auth from "../auth/firebase.js";
+import HamburgerMenu from "./HamburgerMenu";
 
 export default function Header() {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -28,12 +29,13 @@ export default function Header() {
       <Link href={"/"} className="md:text-2xl font-bold navbar-start">
         Recipe Wrangler
       </Link>
-      <div className="navbar-end flex flex-row gap-2">
+      <div className="navbar-end md:flex md:flex-row hidden gap-2">
         <button className="btn btn-soft btn-primary">
           <Link href={"/about"}>About</Link>
         </button>
         <SignInSignOutBtn isSignedIn={isSignedIn} />
         {!isSignedIn && <RegisterBtn />}
+        {isSignedIn && <HamburgerMenu />}
       </div>
     </nav>
   );
