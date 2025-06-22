@@ -20,7 +20,7 @@ export default function ListInput({
       </legend>
       {data.map((_item, i) => (
         <div key={i} className="flex flex-row gap-2 items-center">
-          <label className="text-lg">{"Ingredient " + (i + 1)}</label>
+          <label className="text-lg">{`${title} ` + (i + 1)}</label>
           <input
             type="text"
             className="input"
