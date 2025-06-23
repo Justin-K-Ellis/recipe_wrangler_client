@@ -27,6 +27,8 @@ export default function Page() {
     try {
       await createUserWithEmailAndPassword(auth, email, password1);
       onAuthStateChanged(auth, (user) => {
+        console.log(user);
+
         user?.getIdToken().then((idToken) => {
           fetch(`${api}/user`, {
             method: "POST",
@@ -34,10 +36,6 @@ export default function Page() {
               "Content-type": "application/json",
               Authorization: `Bearer ${idToken}`,
             },
-            body: JSON.stringify({
-              email: email,
-              diplayName: user.displayName,
-            }),
           });
           router.push("/");
         });
