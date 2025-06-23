@@ -1,4 +1,3 @@
-import Link from "next/link";
 import SidebarBtn from "./SidebarBtn";
 import listItems from "../data/sideBarData";
 
