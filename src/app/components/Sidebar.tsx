@@ -9,9 +9,10 @@ export default function Sidebar() {
         {listItems.map((item) => (
           <li
             key={item.name}
-            className="text-xl border border-primary rounded shadow p-1 hover:bg-base-300"
+            // className="text-xl border border-primary rounded shadow p-1 hover:bg-base-300"
           >
-            <Link href={item.link}>{item.name + " " + item.icon}</Link>
+            <SidebarBtn link={item.link} text={item.name + " " + item.icon} />
+            {/* <Link href={item.link}>{item.name + " " + item.icon}</Link> */}
           </li>
         ))}
         <li>
