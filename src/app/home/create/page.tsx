@@ -101,9 +101,12 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mb-4">
       <PageTitle text="Create a New Recipe" />
-      <form onSubmit={handleSubmit} className="flex flex-col mt-8 gap-4 w-6/10">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col mt-8 gap-4 w-9/10 md:w-6/10"
+      >
         {/* Name */}
         <div className="flex flex-row gap-4 items-center">
           <label className="text-xl font-bold">Name</label>
