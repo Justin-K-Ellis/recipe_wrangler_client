@@ -3,6 +3,7 @@
 import { SyntheticEvent, useState } from "react";
 import Link from "next/link";
 import { SearchResults } from "@/app/types";
+import SearchGlass from "@/app/svgs/SearchGlass";
 
 export default function Search() {
   const [searchValue, setSearchValue] = useState("");
@@ -38,22 +39,7 @@ export default function Search() {
           <div className="flex flex-row gap-2">
             {/* Search bar */}
             <label className="input">
-              <svg
-                className="h-[1em] opacity-50"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <g
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2.5"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </g>
-              </svg>
+              <SearchGlass />
               <input
                 type="search"
                 className="grow"
