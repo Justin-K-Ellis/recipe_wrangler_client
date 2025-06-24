@@ -44,7 +44,7 @@ export default function Page() {
     );
 
   return (
-    <section className="flex flex-col mx-auto w-6/10 gap-3">
+    <section className="flex flex-col mx-auto w-9/10 md:w-6/10 gap-3">
       <PageTitle text="My Recipes" />
       {customRecipes.map((recipe) => (
         <Link

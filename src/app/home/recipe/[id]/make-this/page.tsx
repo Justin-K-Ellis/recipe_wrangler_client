@@ -40,6 +40,8 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
           console.error("response:", response);
         } else {
           const data = await response.json();
+          console.log(data);
+
           setRecipeData(data);
         }
       } catch (error) {
@@ -51,7 +53,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
   return (
     <div>
-      <div className="card card-border p-4 w-7/10">
+      <div className="card card-border p-4 mx-auto w-9/10 md:w-7/10">
         <div className="card-title text-2xl">{recipeData.name}</div>
         <div className="card-body">
           <p className="font-bold">

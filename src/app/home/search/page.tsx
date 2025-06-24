@@ -55,10 +55,13 @@ export default function Search() {
           </div>
         </form>
       </section>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 my-4">
         {searchResults &&
           searchResults?.map((result) => (
-            <div key={result.id} className="card card-border w-5/10 mx-auto">
+            <div
+              key={result.id}
+              className="card card-border w-9/10 md:w-5/10 mx-auto"
+            >
               <Link href={`/home/recipe/${result.id}/make-this/`}>
                 <div className="card-body">
                   <p className="text-xl font-bold">{result.name}</p>
