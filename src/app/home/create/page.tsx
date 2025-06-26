@@ -2,6 +2,7 @@
 
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import auth from "../../auth/firebase";
 import PageTitle from "@/app/components/PageTitle";
 import ListInput from "@/app/components/ListInput";
 
@@ -18,7 +19,9 @@ export default function Page() {
 
   async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
-    const token = localStorage.getItem("token");
+    const user = auth.currentUser;
+    const token = await user?.getIdToken();
+
     try {
       const readyNum = parseInt(readyInMinutes);
       const servingNum = parseInt(servings);

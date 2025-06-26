@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { use } from "react";
 import { RecipeFullInfo } from "@/app/types";
+import auth from "../../../../auth/firebase";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [recipeData, setRecipeData] = useState<RecipeFullInfo>({
@@ -25,7 +26,8 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
   useEffect(() => {
     async function getRecipeData() {
-      const token = localStorage.getItem("token");
+      const user = auth.currentUser;
+      const token = await user?.getIdToken();
 
       try {
         const response = await fetch(url, {
@@ -40,8 +42,6 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
           console.error("response:", response);
         } else {
           const data = await response.json();
-          console.log(data);
-
           setRecipeData(data);
         }
       } catch (error) {

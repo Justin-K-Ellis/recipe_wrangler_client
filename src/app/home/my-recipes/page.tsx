@@ -5,6 +5,7 @@ import Link from "next/link";
 import PageTitle from "@/app/components/PageTitle";
 import RecipePreviewCard from "@/app/components/RecipePreviewCard";
 import { RecipePreview } from "@/app/types";
+import auth from "../../auth/firebase";
 
 export default function Page() {
   const [customRecipes, setCustomRecipes] = useState<RecipePreview[]>([]);
@@ -12,8 +13,9 @@ export default function Page() {
   const api = process.env.NEXT_PUBLIC_EXP_API;
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     async function getAllRecipes() {
+      const user = auth.currentUser;
+      const token = await user?.getIdToken();
       try {
         const response = await fetch(`${api}/custom-recipe`, {
           method: "GET",

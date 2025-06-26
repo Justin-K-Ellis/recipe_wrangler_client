@@ -4,6 +4,7 @@ import { SyntheticEvent, useState } from "react";
 import Link from "next/link";
 import { SearchResults } from "@/app/types";
 import SearchGlass from "@/app/svgs/SearchGlass";
+import auth from "../../auth/firebase";
 
 export default function Search() {
   const [searchValue, setSearchValue] = useState("");
@@ -12,8 +13,9 @@ export default function Search() {
   const api = process.env.NEXT_PUBLIC_EXP_API;
 
   async function handleSubmit(event: SyntheticEvent) {
-    const token = localStorage.getItem("token");
     event.preventDefault();
+    const user = auth.currentUser;
+    const token = await user?.getIdToken();
     try {
       const response = await fetch(`${api}/external-recipe/${searchValue}`, {
         method: "get",
