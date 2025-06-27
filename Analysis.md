@@ -12,6 +12,8 @@ focus on possible improvements to the frontend, with an emphasis on user experie
 Though this app has a solid foundation, users would benefit from additional features in
 several areas.
 
+- Full CRUD Abilities for Custom Recipes
+
 - Saving Favorited Recipes
 
 - Saving "Want to Try" Recipes
@@ -39,7 +41,14 @@ expect to have to delete, or even know about if they are less technical.
 Whenever possible, the app should use the native Firebase auth methods for getting and passing
 user information instead of persisting it in `localStorage`.
 
-### (2) Saving Favorited Recipes
+### (3) Full CRUD Abilities for Custom Recipes
+
+**Reason**: Users can currently create and access custom recipes, but once created, there's
+no way to modify or delete this data. Users typically expect to be able to have some control
+over the data they've deliberately created themselves, so the app should give them the power
+to update and delete custom recipes.
+
+### (3) Saving Favorited Recipes
 
 **Reason**: Users who find a recipe they particularly like should not have search for it
 each time (along with the additonal effort for of running the search itself and browsing the
@@ -49,7 +58,7 @@ point).
 The id of a favorited recipe should be saved in the DB so it can be retrieved later for the
 user to view.
 
-### (3) Adding a Loading Spinner
+### (4) Adding a Loading Spinner
 
 **Reason**: Even if the queried data (data from the Spoonacular API or the DB) is not
 available instantly, users expect some kind of feedback to their action, and a blank screen
