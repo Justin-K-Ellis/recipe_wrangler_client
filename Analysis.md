@@ -48,7 +48,7 @@ no way to modify or delete this data. Users typically expect to be able to have 
 over the data they've deliberately created themselves, so the app should give them the power
 to update and delete custom recipes.
 
-### (3) Saving Favorited Recipes
+### (4) Saving Favorited Recipes
 
 **Reason**: Users who find a recipe they particularly like should not have search for it
 each time (along with the additonal effort for of running the search itself and browsing the
