@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { use } from "react";
 import { RecipeFullInfo } from "@/app/types";
+import { useRouter } from "next/navigation";
 import auth from "../../../../auth/firebase";
 import LoadingSpinner from "@/app/components/LoadingSpinner";
 
@@ -15,12 +16,14 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     servings: 0,
   });
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const { id } = use(params);
 
   const baseApi = process.env.NEXT_PUBLIC_EXP_API;
+  const isCustomRecipe = id.length > 6;
   let url = "";
-  if (id.length > 6) {
+  if (isCustomRecipe) {
     url = `${baseApi}/custom-recipe/${id}`;
   } else {
     url = `${baseApi}/external-recipe/id/${id}`;
@@ -56,6 +59,33 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     getRecipeData();
   }, [id, url]);
 
+  async function handleDelete(recipeId: number | string) {
+    const answer = confirm("Are you sure you want to delete this recipe?");
+    if (answer) {
+      console.log(`delete recipe ${recipeId}`);
+      const user = auth.currentUser;
+      const token = await user?.getIdToken();
+      try {
+        const response = await fetch(`${baseApi}/custom-recipe/${recipeId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          console.error(response);
+          alert("Could not delete recipe.");
+        } else {
+          router.push("/home/my-recipes");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Could not delete recipe.");
+      }
+    }
+  }
+
   if (loading) return <LoadingSpinner />;
 
   return (
@@ -81,6 +111,15 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
               {step}
             </span>
           ))}
+          <div>
+            <button
+              type="button"
+              className="btn btn-warning"
+              onClick={() => handleDelete(recipeData.externalId)}
+            >
+              Delete
+            </button>
+          </div>
         </div>
       </div>
     </div>

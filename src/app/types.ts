@@ -1,5 +1,5 @@
 interface RecipeFullInfo {
-  externalId: number;
+  externalId: number | string;
   name: string;
   ingredients: string[];
   steps: string[];
