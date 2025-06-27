@@ -5,15 +5,18 @@ import Link from "next/link";
 import { SearchResults } from "@/app/types";
 import SearchGlass from "@/app/svgs/SearchGlass";
 import auth from "../../auth/firebase";
+import LoadingSpinner from "@/app/components/LoadingSpinner";
 
 export default function Search() {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResults[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const api = process.env.NEXT_PUBLIC_EXP_API;
 
   async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
+    setLoading(true);
     const user = auth.currentUser;
     const token = await user?.getIdToken();
     try {
@@ -31,8 +34,12 @@ export default function Search() {
       setSearchResults(data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div id="container" className="flex flex-col">

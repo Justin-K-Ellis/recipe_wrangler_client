@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { use } from "react";
 import { RecipeFullInfo } from "@/app/types";
 import auth from "../../../../auth/firebase";
+import LoadingSpinner from "@/app/components/LoadingSpinner";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [recipeData, setRecipeData] = useState<RecipeFullInfo>({
@@ -13,6 +14,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     readyInMinutes: 0,
     servings: 0,
   });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { id } = use(params);
 
@@ -28,6 +30,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     async function getRecipeData() {
       const user = auth.currentUser;
       const token = await user?.getIdToken();
+      setLoading(true);
 
       try {
         const response = await fetch(url, {
@@ -46,10 +49,14 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
     getRecipeData();
   }, [id, url]);
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div>

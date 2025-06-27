@@ -4,18 +4,21 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import PageTitle from "@/app/components/PageTitle";
 import RecipePreviewCard from "@/app/components/RecipePreviewCard";
+import LoadingSpinner from "@/app/components/LoadingSpinner";
 import { RecipePreview } from "@/app/types";
 import auth from "../../auth/firebase";
 
 export default function Page() {
   const [customRecipes, setCustomRecipes] = useState<RecipePreview[]>([]);
   const [isLoadingError, setIsLoadingError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const api = process.env.NEXT_PUBLIC_EXP_API;
 
   useEffect(() => {
     async function getAllRecipes() {
       const user = auth.currentUser;
       const token = await user?.getIdToken();
+
       try {
         const response = await fetch(`${api}/custom-recipe`, {
           method: "GET",
@@ -33,10 +36,14 @@ export default function Page() {
       } catch (error) {
         console.error(error);
         setIsLoadingError(true);
+      } finally {
+        setLoading(false);
       }
     }
     getAllRecipes();
   }, [api]);
+
+  if (loading) return <LoadingSpinner />;
 
   if (isLoadingError)
     return (
