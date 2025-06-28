@@ -1,6 +1,6 @@
 "use client";
 
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import auth from "../auth/firebase";
 import PageTitle from "@/app/components/PageTitle";
@@ -25,14 +25,17 @@ export default function RecipeInput({ inputType, recipeId }: RecipeInputProps) {
   const api = process.env.NEXT_PUBLIC_EXP_API;
 
   const recipeData: RecipeFullInfo | null = useGetCustomRecipeData(recipeId);
-  if (recipeData) {
-    setName(recipeData.name);
-    setCuisine(recipeData.cuisine);
-    setIngredients(recipeData.ingredients);
-    setSteps(recipeData.steps);
-    setReadyInMinutes(recipeData.readyInMinutes.toString());
-    setServings(recipeData.servings.toString());
-  }
+
+  useEffect(() => {
+    if (recipeData) {
+      setName(recipeData.name);
+      setCuisine(recipeData.cuisine);
+      setIngredients(recipeData.ingredients);
+      setSteps(recipeData.steps);
+      setReadyInMinutes(recipeData.readyInMinutes.toString());
+      setServings(recipeData.servings.toString());
+    }
+  }, [recipeData]);
 
   async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
@@ -127,7 +130,13 @@ export default function RecipeInput({ inputType, recipeId }: RecipeInputProps) {
 
   return (
     <div className="flex flex-col items-center mb-4">
-      <PageTitle text="Create a New Recipe" />
+      <PageTitle
+        text={
+          inputType === "create"
+            ? "Create a New Recipe"
+            : `Update ${recipeData?.name}`
+        }
+      />
       <form
         onSubmit={handleSubmit}
         className="flex flex-col mt-8 gap-4 w-9/10 md:w-6/10"
