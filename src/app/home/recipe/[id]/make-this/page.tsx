@@ -112,7 +112,16 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
               {step}
             </span>
           ))}
-          <div>
+          <div className="flex flex-row gap-2 justify-center mt-4">
+            <button
+              type="button"
+              className="btn btn-neutral"
+              onClick={() =>
+                router.push(`/home/my-recipes/update/${recipeData.externalId}`)
+              }
+            >
+              Update
+            </button>
             <button
               type="button"
               className="btn btn-warning"
