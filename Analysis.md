@@ -41,14 +41,14 @@ expect to have to delete, or even know about if they are less technical.
 Whenever possible, the app should use the native Firebase auth methods for getting and passing
 user information instead of persisting it in `localStorage`.
 
-### (3) Full CRUD Abilities for Custom Recipes
+### (2) Full CRUD Abilities for Custom Recipes
 
 **Reason**: Users can currently create and access custom recipes, but once created, there's
 no way to modify or delete this data. Users typically expect to be able to have some control
 over the data they've deliberately created themselves, so the app should give them the power
 to update and delete custom recipes.
 
-### (4) Saving Favorited Recipes
+### (3) Saving Favorited Recipes
 
 **Reason**: Users who find a recipe they particularly like should not have search for it
 each time (along with the additonal effort for of running the search itself and browsing the
