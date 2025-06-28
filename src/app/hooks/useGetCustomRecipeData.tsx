@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import type { RecipeFullInfo } from "@/app/types";
 
 export default function useGetCustomRecipeData(
-  recipeId: string
+  recipeId: string | null
 ): RecipeFullInfo | null {
   const [recipeData, setRecipeData] = useState<RecipeFullInfo>({
     externalId: 0,
     name: "",
+    cuisine: "",
     ingredients: [],
     steps: [],
     readyInMinutes: 0,
