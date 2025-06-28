@@ -10,6 +10,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [recipeData, setRecipeData] = useState<RecipeFullInfo>({
     externalId: 0,
     name: "",
+    cuisine: null,
     ingredients: [],
     steps: [],
     readyInMinutes: 0,
