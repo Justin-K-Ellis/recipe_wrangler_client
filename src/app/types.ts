@@ -1,6 +1,7 @@
 interface RecipeFullInfo {
   externalId: number | string;
   name: string;
+  cuisine: string | null;
   ingredients: string[];
   steps: string[];
   readyInMinutes: number;
