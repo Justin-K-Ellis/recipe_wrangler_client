@@ -87,6 +87,29 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     }
   }
 
+  async function handleFavorite(recipeId: number | string) {
+    const user = auth.currentUser;
+    const token = await user?.getIdToken();
+    try {
+      const response = await fetch(
+        `${baseApi}/external-recipe/favorite/${recipeId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        console.error(response);
+      } else {
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   if (loading) return <LoadingSpinner />;
 
   return (
@@ -133,6 +156,15 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
                 onClick={() => handleDelete(recipeData.externalId)}
               >
                 Delete
+              </button>
+            )}
+            {!isCustomRecipe && (
+              <button
+                type="button"
+                className="btn btn-soft btn-primary"
+                onClick={() => handleFavorite(recipeData.externalId)}
+              >
+                Add to Favorites
               </button>
             )}
           </div>
