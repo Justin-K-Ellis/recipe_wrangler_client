@@ -17,10 +17,11 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     servings: 0,
   });
   const [loading, setLoading] = useState<boolean>(false);
+  const [isFavorited, setIsFavorited] = useState<boolean>(false);
   const router = useRouter();
-
   const { id } = use(params);
 
+  // Helper constants
   const baseApi = process.env.NEXT_PUBLIC_EXP_API;
   const isCustomRecipe = id.length > 6;
   let url = "";
@@ -30,6 +31,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     url = `${baseApi}/external-recipe/id/${id}`;
   }
 
+  // Get recipe data
   useEffect(() => {
     async function getRecipeData() {
       const user = auth.currentUser;
@@ -60,6 +62,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     getRecipeData();
   }, [id, url]);
 
+  // Handlers
   async function handleDelete(recipeId: number | string) {
     const answer = confirm("Are you sure you want to delete this recipe?");
     if (answer) {
@@ -87,7 +90,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     }
   }
 
-  async function handleFavorite(recipeId: number | string) {
+  async function handleAddToFavorites(recipeId: number | string) {
     const user = auth.currentUser;
     const token = await user?.getIdToken();
     try {
@@ -104,10 +107,17 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       if (!response.ok) {
         console.error(response);
       } else {
+        setIsFavorited(true);
       }
     } catch (error) {
       console.error(error);
     }
+  }
+
+  async function handleRemoveFromFavorites(recipeId: number | string) {
+    const user = auth.currentUser;
+    const token = await user?.getIdToken();
+    setIsFavorited(false);
   }
 
   if (loading) return <LoadingSpinner />;
@@ -115,12 +125,14 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   return (
     <div>
       <div className="card card-border p-4 mx-auto w-9/10 md:w-7/10">
+        {/* Basic info */}
         <div className="card-title text-2xl">{recipeData.name}</div>
         <div className="card-body">
           <p className="font-bold">
             Ready in {recipeData.readyInMinutes} minutes
           </p>
           <p className="font-bold">Serves: {recipeData.servings}</p>
+          {/* Ingredients */}
           <h2 className="font-bold">Ingredients:</h2>
           {recipeData.ingredients.map((ing) => (
             <span key={ing} className="flex flex-row gap-2 items-center">
@@ -128,6 +140,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
               {ing}
             </span>
           ))}
+          {/* Steps */}
           <h2 className="font-bold">Steps:</h2>
           {recipeData.steps.map((step) => (
             <span key={step} className="flex flex-row gap-2 items-center">
@@ -135,6 +148,8 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
               {step}
             </span>
           ))}
+          {/* If custom recipe... */}
+          {/* Update */}
           <div className="flex flex-row gap-2 justify-center mt-4">
             {isCustomRecipe && (
               <button
@@ -149,6 +164,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
                 Update
               </button>
             )}
+            {/* Delete */}
             {isCustomRecipe && (
               <button
                 type="button"
@@ -158,13 +174,25 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
                 Delete
               </button>
             )}
-            {!isCustomRecipe && (
+            {/* If recipe from Spoonacular... */}
+            {/* Add to Favorites */}
+            {!isCustomRecipe && !isFavorited && (
               <button
                 type="button"
                 className="btn btn-soft btn-primary"
-                onClick={() => handleFavorite(recipeData.externalId)}
+                onClick={() => handleAddToFavorites(recipeData.externalId)}
               >
                 Add to Favorites
+              </button>
+            )}
+            {/* Remove from Favorites */}
+            {!isCustomRecipe && isFavorited && (
+              <button
+                type="button"
+                className="btn btn-soft btn-primary"
+                onClick={() => handleRemoveFromFavorites(recipeData.externalId)}
+              >
+                Remove from Favorites
               </button>
             )}
           </div>
