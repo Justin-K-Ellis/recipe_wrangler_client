@@ -113,22 +113,28 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
             </span>
           ))}
           <div className="flex flex-row gap-2 justify-center mt-4">
-            <button
-              type="button"
-              className="btn btn-neutral"
-              onClick={() =>
-                router.push(`/home/my-recipes/update/${recipeData.externalId}`)
-              }
-            >
-              Update
-            </button>
-            <button
-              type="button"
-              className="btn btn-warning"
-              onClick={() => handleDelete(recipeData.externalId)}
-            >
-              Delete
-            </button>
+            {isCustomRecipe && (
+              <button
+                type="button"
+                className="btn btn-neutral"
+                onClick={() =>
+                  router.push(
+                    `/home/my-recipes/update/${recipeData.externalId}`
+                  )
+                }
+              >
+                Update
+              </button>
+            )}
+            {isCustomRecipe && (
+              <button
+                type="button"
+                className="btn btn-warning"
+                onClick={() => handleDelete(recipeData.externalId)}
+              >
+                Delete
+              </button>
+            )}
           </div>
         </div>
       </div>
