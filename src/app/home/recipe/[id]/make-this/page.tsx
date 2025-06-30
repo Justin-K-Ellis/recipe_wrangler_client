@@ -106,6 +106,9 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
             Authorization: `Bearer ${token}`,
             "Content-type": "application/json",
           },
+          body: JSON.stringify({
+            name: recipeData.name,
+          }),
         }
       );
       if (!response.ok) {
