@@ -1,11 +1,11 @@
 import { SideBarItem } from "../types";
 
 const listItems: SideBarItem[] = [
-  // {
-  //   name: "Favorites",
-  //   icon: "❤️",
-  //   link: "/home/favorites",
-  // },
+  {
+    name: "Favorites",
+    icon: "❤️",
+    link: "/home/favorites",
+  },
   // {
   //   name: "Want to Make",
   //   icon: "🤔",
