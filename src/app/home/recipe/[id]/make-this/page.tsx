@@ -17,7 +17,9 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     servings: 0,
   });
   const [loading, setLoading] = useState<boolean>(false);
+  const [fetchError, setFetchError] = useState<boolean>(false);
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
+  const [favoritingError, setFavoritingError] = useState<boolean>(false);
   const router = useRouter();
   const { id } = use(params);
 
@@ -36,6 +38,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     async function getRecipeData() {
       const user = auth.currentUser;
       const token = await user?.getIdToken();
+
       setLoading(true);
 
       try {
@@ -49,12 +52,14 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
         if (!response.ok) {
           console.error("response:", response);
+          setFetchError(true);
         } else {
           const data = await response.json();
           setRecipeData(data);
         }
       } catch (error) {
         console.error(error);
+        setFetchError(true);
       } finally {
         setLoading(false);
       }
@@ -66,7 +71,6 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   async function handleDelete(recipeId: number | string) {
     const answer = confirm("Are you sure you want to delete this recipe?");
     if (answer) {
-      console.log(`delete recipe ${recipeId}`);
       const user = auth.currentUser;
       const token = await user?.getIdToken();
       try {
@@ -106,21 +110,57 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       );
       if (!response.ok) {
         console.error(response);
+        setFavoritingError(true);
       } else {
         setIsFavorited(true);
       }
     } catch (error) {
       console.error(error);
+      setFavoritingError(true);
     }
   }
 
   async function handleRemoveFromFavorites(recipeId: number | string) {
     const user = auth.currentUser;
     const token = await user?.getIdToken();
-    setIsFavorited(false);
+
+    try {
+      const response = await fetch(
+        `${baseApi}/external-recipe/unfavorite/${recipeId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        console.error(response);
+        setFavoritingError(true);
+      } else {
+        setIsFavorited(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setFavoritingError(true);
+    }
   }
 
   if (loading) return <LoadingSpinner />;
+
+  if (fetchError)
+    return (
+      <p className="text-red-500">
+        Something went wrong when loading this recipe.
+      </p>
+    );
+  if (favoritingError)
+    return (
+      <p className="text-red-500">
+        Something went wrong when updating your favorites.
+      </p>
+    );
 
   return (
     <div>
