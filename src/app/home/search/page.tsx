@@ -20,13 +20,16 @@ export default function Search() {
     const user = auth.currentUser;
     const token = await user?.getIdToken();
     try {
-      const response = await fetch(`${api}/external-recipe/${searchValue}`, {
-        method: "get",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${api}/external-recipe/search/${searchValue}`,
+        {
+          method: "get",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (!response.ok) {
         console.error(response);
       }
