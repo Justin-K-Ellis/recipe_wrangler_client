@@ -5,6 +5,8 @@
 Recipe Wrangler is a web app that lets user search for and create recipes. It uses the
 [Spoonacular API](https://spoonacular.com/food-api/docs#Search-Recipes-Complex) as a source of data for recipes. Authenticated users can favorite recipes they like from their search results, and also create their own recipes (as well as update and delete their custom recipes).
 
+A deployed instance of the app is available [here](https://recipe-wrangler-client-git-ag-d5439f-justin-klitgaards-projects.vercel.app/).
+
 ## Tech Stack
 
 ### Frontend (this repo)
