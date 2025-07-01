@@ -58,7 +58,7 @@ export default function Page() {
       <div className="flex flex-col gap-2 mx-auto w-9/10 md:w-6/10">
         {favorites.map((recipe) => (
           <Link
-            href={`/home/recipe/${recipe.externalId}/make-this`}
+            href={`/home/recipe/${recipe.externalId}/make-this?favorited=true`}
             key={recipe.externalId}
           >
             <RecipePreviewCard

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { use } from "react";
+import { useSearchParams } from "next/navigation";
 import { RecipeFullInfo } from "@/app/types";
 import { useRouter } from "next/navigation";
 import auth from "../../../../auth/firebase";
@@ -22,6 +23,9 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [favoritingError, setFavoritingError] = useState<boolean>(false);
   const router = useRouter();
   const { id } = use(params);
+
+  const searchParams = useSearchParams();
+  const favoriteStatus = Boolean(searchParams.get("favorited"));
 
   // Helper constants
   const baseApi = process.env.NEXT_PUBLIC_EXP_API;
@@ -56,6 +60,11 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
         } else {
           const data = await response.json();
           setRecipeData(data);
+          if (!isCustomRecipe && favoriteStatus) {
+            setIsFavorited(true);
+          } else {
+            setIsFavorited(data.isFavorited || false);
+          }
         }
       } catch (error) {
         console.error(error);
