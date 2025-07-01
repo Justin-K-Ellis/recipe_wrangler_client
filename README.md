@@ -84,3 +84,11 @@ Users can:
   - Prep/cook steps
 - Users can access their custom recipes in the "My Recipes", where they can update or
   delete their recipes.
+
+## For the Reviewer
+
+The most significant changes can be found in `/src/app/home`. Specifically, in the
+`/favorites`, `/my-recipes`, and `/recipe/[id]/make-this` directories. There have also been
+several updates to files in `/src/app/components`.
+
+On Git, updates begin from commit `02e75f8`.
